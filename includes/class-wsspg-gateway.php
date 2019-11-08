@@ -343,11 +343,11 @@ class Wsspg_Payment_Gateway extends WC_Payment_Gateway_CC {
 					if( isset( $roles ) ) $metadata = array_merge( $roles, $metadata );
 					$params = array(
 						"customer" => $customer->stripe,
-						"source" => $source,
-						"plan" => $item->get_plan_id(),
-						"quantity" => $cart_item['quantity'],
-						"tax_percent" => $tax_percent,
-						"metadata" => $metadata,
+						"items" => [
+						  [
+						    "plan" => $item->get_plan_id(),
+						  ],
+						]
 					);
 					$subscription = Wsspg_API::request( 'subscriptions', $this->key, $params );
 					if( ! isset( $subscription ) ) throw new Exception();
